@@ -1,11 +1,52 @@
+---
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = 'Faris Jiwad | Computer Science Research',
+	description = "Faris Jiwad's research interests, projects, and tools in computer science.",
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const personSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	name: 'Faris Jiwad',
+	url: Astro.site?.toString(),
+	jobTitle: 'Computer Science Researcher',
+	knowsAbout: [
+		'Operating systems',
+		'Autonomous systems',
+		'Artificial intelligence',
+		'Machine learning',
+		'Human-computer interaction',
+	],
+	sameAs: ['https://github.com/farisjiwad'],
+};
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="description" content="Faris Jiwad's research interests, projects, and tools in computer science." />
+		<meta name="description" content={description} />
+		<meta name="author" content="Faris Jiwad" />
 		<meta name="theme-color" content="#172c23" />
-		<title>Faris Jiwad | Computer Science Research</title>
+		<link rel="canonical" href={canonical} />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Faris Jiwad" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+		<title>{title}</title>
 	</head>
 	<body>
 		<slot />
